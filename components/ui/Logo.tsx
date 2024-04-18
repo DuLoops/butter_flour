@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function OrderDetail() {
+export default function Logo() {
   return (
     <div>
       

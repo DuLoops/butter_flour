@@ -1,16 +1,11 @@
 "use client"
-import React, { createContext, useState, useContext, useEffect, useReducer } from 'react';
-import { OrderDetails } from '@/types';
+import React, { createContext, useState, useEffect, useReducer } from 'react';
+import { OrderDetails, OrderAction } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
-interface OrderAction {
-    type: string;
-    payload: any;
-}
 
 const initialOrderDetails: OrderDetails = {
     id: uuidv4(),
-    authenicated: false,
     customer_id: null,
     order_method: 'Pickup',
     cart: [],
@@ -24,6 +19,10 @@ const OrderContext = createContext<{
 
 const reducer = (state: OrderDetails, action: OrderAction): OrderDetails => {
     switch (action.type) {
+        case 'SET_ORDER_METHOD': 
+        return { ...state, order_method: action.payload };
+
+        
         case 'ADD_ITEM':
             return { ...state, cart: [...state.cart, action.payload] };
         // ... other cases
@@ -57,4 +56,4 @@ function OrderProvider({ children }: { children: React.ReactNode }) {
     );
 }
 
-export { OrderContext, OrderProvider }; // We only export OrderProvider here
+export { OrderContext, OrderProvider }; 

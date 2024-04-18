@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { OrderProvider } from "./context";
+import { OrderProvider } from "@/lib/context";
 import "./globals.css";
 import Nav from "@/components/ui/Nav";
 

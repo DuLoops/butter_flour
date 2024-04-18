@@ -1,7 +1,8 @@
+import OrderDetail from "@/components/order/OrderDetail"
 export default function Home() {
   return (
       <div>
-        <h1>Home</h1>
+        <OrderDetail />
       </div>
   )}
   

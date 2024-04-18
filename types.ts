@@ -55,5 +55,9 @@ interface Customization {
     size: CakeSize;
 }
 
+interface OrderAction {
+    type: string;
+    payload: any;
+}
 
-export type {OrderDetails, Cake, Customization}
+export type {OrderDetails, Cake, Customization, OrderAction}
