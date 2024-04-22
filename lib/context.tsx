@@ -3,11 +3,14 @@ import React, { createContext, useState, useEffect, useReducer } from 'react';
 import { OrderDetails, OrderAction } from '@/types';
 import { v4 as uuidv4 } from 'uuid';
 
+const date = new Date()
 
 const initialOrderDetails: OrderDetails = {
     id: uuidv4(),
     customer_id: null,
     order_method: 'Pickup',
+    date: date,
+    time: '',
     cart: [],
 };
 
@@ -20,9 +23,11 @@ const OrderContext = createContext<{
 const reducer = (state: OrderDetails, action: OrderAction): OrderDetails => {
     switch (action.type) {
         case 'SET_ORDER_METHOD': 
-        return { ...state, order_method: action.payload };
-
-        
+            return { ...state, order_method: action.payload };
+        case 'SET_DATE':
+            return {...state, date: action.payload}
+        case 'SET_TIME':
+            return {...state, time: action.payload}
         case 'ADD_ITEM':
             return { ...state, cart: [...state.cart, action.payload] };
         // ... other cases

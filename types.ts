@@ -3,24 +3,15 @@ interface CartItem {
     customization_id?: string;  // Optional if not every cake is customized
 }
 
-interface Pickup {
-    id: string;
-    time: string; // You can use a more specific type like Date
-}
-
-interface Delivery {
-    id: string;
-    time: string; // Or Date
-    address: string;
-}
 
 interface OrderDetails {
     id: string;
     customer_id: null| string;
     order_method: 'Delivery' | 'Pickup';
+    date: Date
+    time: string;
     cart: CartItem[];
-    pickup?: Pickup; // Optional if the order is for pickup
-    delivery?: Delivery; // Optional if the order is for delivery
+    deliveryAddress?: string; // Optional if the order is for delivery
 }
 
 interface Customer {
