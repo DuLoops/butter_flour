@@ -5,7 +5,7 @@ import { OrderContext } from '@/lib/context'
 export default function OrderMethod() {
 
   const { state, dispatch } = React.useContext(OrderContext)
-
+  console.log(state.order_method)
   return (
     <div className='flex flex-col gap-1 m-2'>
       <Button

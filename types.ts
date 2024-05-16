@@ -8,7 +8,7 @@ interface OrderDetails {
     id: string;
     customer_id: null| string;
     order_method: 'Delivery' | 'Pickup';
-    date: Date
+    date: Date ;
     time: string;
     cart: CartItem[];
     deliveryAddress?: string; // Optional if the order is for delivery

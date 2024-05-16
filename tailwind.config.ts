@@ -24,6 +24,7 @@ const config = {
         'formaD': ['forma-djr-display', 'sans-serif'],
         'formaT': ['forma-djr-text', 'sans-serif'],
         'auster': ['auster', 'sans-serif'],
+        'quicksand': ['Quicksand', 'sans-serif'],
       },
       colors: {
         '_blue': '#ACDEF2',

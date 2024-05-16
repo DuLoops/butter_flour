@@ -5,5 +5,5 @@ export default function Logo() {
     <div>
       
     </div>
-  )
+)
 }

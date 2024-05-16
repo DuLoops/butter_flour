@@ -2,7 +2,7 @@
 
 import {useState, useContext, useEffect} from "react"
 import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
+import { FaRegCalendarAlt } from "react-icons/fa";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -16,8 +16,8 @@ import {
 export function DatePicker() {
     const { state, dispatch } = useContext(OrderContext)
 
-    const setDate = (date:Date) => {
-        dispatch({type:'SET_DATE', payload:(date)})
+    const setDate = (day: Date | undefined) => {
+        dispatch({type:'SET_DATE', payload:(day)})
     }
     console.log(state.date)
   return (
@@ -26,12 +26,12 @@ export function DatePicker() {
         <Button
           variant={"outline"}
           className={cn(
-            "w-[280px] justify-start text-left font-normal",
+            "w-2/3 justify-between font-normal px-2",
             !state.date && "text-muted-foreground"
           )}
         >
-          <CalendarIcon className="mr-2 h-4 w-4" />
           {state.date ? format(state.date, "PPP") : <span>Pick a date</span>}
+          <FaRegCalendarAlt className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
