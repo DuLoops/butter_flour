@@ -19,7 +19,7 @@ export default function Nav({ children }: { children: React.ReactNode }) {
           <BiCart className='size-7' />
         </Link>
         <Link href={'/'} className='col-start-2 flex justify-center'>
-          <Image src='/images/logo.png' alt='logo' width={100} height={40}/>
+          <Image src='/images/logo.png' alt='ButterFlour' width={100} height={40}/>
           {/* Logo */}
       </Link>
         <button className='col-start-3 row-start-1 flex justify-end items-center lg:hidden' onClick={() => setSideMenuOpen(true)}>
