@@ -43,7 +43,7 @@ export default function Page() {
             <Image src='/svg/cake.svg' alt='cake' width={40} height={40} 
             className='rounded-full mx-auto my-6 w-[160px] h-[160px] object-contain' onClick={()=>setIsConfettiVisible(true)}/>
             <p className='mb-6'>I hope you are having a wonderful birthday :&#41;</p>
-            <p>I can't believe it's been {datingDays} days since we started dating. Ever since that day, I've loved you more and more.</p>
+            <p>I can&apos;t believe it&apos;s been {datingDays} days since we started dating. Ever since that day, I&apos;ve loved you more and more.</p>
             <p></p>
             </div>
           </div>
