@@ -13,7 +13,7 @@ enum pageState {
 
 
 export default function Page() {
-  const [pageState, setPageState] = React.useState("authenticated");
+  const [pageState, setPageState] = React.useState("unathenticated");
   const [isConfettiVisible, setIsConfettiVisible] = React.useState(false);
 
   React.useEffect(() => {
