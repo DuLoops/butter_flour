@@ -1,8 +1,11 @@
-import OrderDetail from "@/components/order/OrderDetail"
+import Landing from "./Landing"
+import Order from "./Order"
+import Menu from "@/components/menu/Menu"
 export default function Home() {
   return (
       <div>
-        <OrderDetail />
+        <Landing />
+        <Order />
       </div>
   )}
   

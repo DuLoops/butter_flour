@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import Image from 'next/image';
 // Sample array of photo URLs
 const photos = [
     '/images/laugh/1.jpeg',
@@ -56,7 +56,7 @@ const LaughMachine = () => {
 
   return (
     <div className="flex flex-col items-center h-[200px] mb-2">
-      <img 
+      <Image 
         src={photos[currentPhotoIndex]} 
         alt="Random" 
         className="w-3/4 h-auto rounded shadow-lg" 

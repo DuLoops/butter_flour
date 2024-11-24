@@ -1,12 +1,12 @@
 "use client"
 
-import {useState, useContext, useEffect} from "react"
+import {useContext} from "react"
 import { format } from "date-fns"
 import { FaRegCalendarAlt } from "react-icons/fa";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
-import { OrderContext } from "@/lib/context"
+import { OrderContext } from "@/lib/cartContext"
 import {
   Popover,
   PopoverContent,
@@ -19,7 +19,6 @@ export function DatePicker() {
     const setDate = (day: Date | undefined) => {
         dispatch({type:'SET_DATE', payload:(day)})
     }
-    console.log(state.date)
   return (
     <Popover>
       <PopoverTrigger asChild>
