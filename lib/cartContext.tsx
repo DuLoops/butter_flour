@@ -3,7 +3,7 @@ import React, { createContext, useState, useEffect, useReducer } from 'react';
 import { OrderDetails, OrderAction } from '@/types/Order';
 import { v4 as uuidv4 } from 'uuid';
 import useOrder from '@/hooks/useOrder';
-
+import { CakeSize } from '@/types/Cake';
 const date = new Date()
 
 const initialOrderDetails: OrderDetails = {
@@ -35,12 +35,12 @@ const reducer = (state: OrderDetails, action: OrderAction): OrderDetails => {
         case 'UPDATE_ITEM':
             return {
                 ...state,
-                orders: state.orders.map(order =>
-                    order.cake_id === action.payload.cake_id
-                        ? { ...order, quantity: action.payload.quantity }
-                        : order
-                ),
-            };
+                orders: state.orders.map(item => {
+                    if (item.cake_id === action.payload.cake_id && item.size === action.payload.size) {
+                        return action.payload;
+                    }
+                    return item;
+                })}
         case 'REMOVE_ITEM':
             return { ...state, orders: state.orders.filter(item => item.cake_id !== action.payload) }
         case 'LOAD_ORDERS':
@@ -58,7 +58,7 @@ function OrderProvider({ children }: { children: React.ReactNode }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const { placeOrder, loading, error } = useOrder();
     
-    const handlePlaceOrder = async (cake_id: number, quantity: number) => {
+    const handlePlaceOrder = async (cake_id: number, quantity: number, size: CakeSize) => {
         try {
             const order = await placeOrder(cake_id, quantity);
             console.log('Order placed:', order);

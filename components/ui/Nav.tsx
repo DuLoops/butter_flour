@@ -9,17 +9,21 @@ import { useState, useContext } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import { menuItems } from '@/lib/data'
 import SideNav from './SideNav'
-import { FaGift } from "react-icons/fa";
+import { FaGift, FaHome } from "react-icons/fa";
 import { OrderContext } from '@/lib/cartContext';
-import { cn } from '@/lib/utils'
+import { usePathname } from 'next/navigation';
+
 export default function Nav({ children }: { children: React.ReactNode }) {
   const [isSideMenuOpen, setSideMenuOpen] = useState(false);
   const { state } = useContext(OrderContext);
+  const isCart = usePathname() == '/cart';
+
+
   return (
     <div>
       <nav className='grid grid-cols-3 w-screen p-2 bg-_blue items-center sticky top-0'>
-        <Link href={'/cart'} className={`flex justify-center items-center size-10 rounded-full ${state.cartEmpty ? 'bg-none' : 'bg-_pink shadow'}`}>
-          <FaGift  className='size-7'/>
+        <Link href={isCart ? '/' : '/cart'} className={`flex justify-center items-center size-10 rounded-full ${!isCart && !state.cartEmpty ? 'bg-_pink shadow' : ''}`}>
+          {isCart ? <FaHome className='size-7'/> : <FaGift className='size-7'/>}
         </Link>
         <Link href={'/'} className='col-start-2 flex justify-center'>
           <Image src='/svg/bfLogo.svg' alt='ButterFlour' width={100} height={40}/>

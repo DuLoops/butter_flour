@@ -1,20 +1,3 @@
-interface OrderItem {
-    cake_id: number
-    quantity: number;
-    customization_id?: string;  // Optional if not every cake is customized
-}
-
-
-interface OrderDetails {
-    id: string;
-    customer_id: null| string;
-    order_method: 'Delivery' | 'Pickup';
-    date: Date ;
-    time: string;
-    orders: OrderItem[];
-    deliveryAddress?: string; // Optional if the order is for delivery
-}
-
 interface Customer {
     id: string;
     name: string;
@@ -24,19 +7,20 @@ interface Customer {
 }
 
 enum CakeSize {
-    SIX_INCH = '6 Inch',
-    EIGHT_INCH = '8 Inch' 
+    SIX_INCH = '6 "',
+    EIGHT_INCH = '8 "' 
 }
 
 interface Cake {
     id: number;
     name: string;
-    price: number;
+    priceRange: string;
     desc: string;
     image: string;
     release_date?: string; // Or Date
     sale_quantity?: number;
     available_size: CakeSize[];
+    prices: { [key in CakeSize]: number };
 }
 
 interface Customization {
@@ -48,10 +32,5 @@ interface Customization {
     size: CakeSize;
 }
 
-interface OrderAction {
-    type: string;
-    payload: any;
-}
-
-export type {OrderDetails, OrderItem, Cake, Customization, OrderAction}
-export {CakeSize}
+export type { Cake, Customization };
+export { CakeSize };
