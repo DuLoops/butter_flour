@@ -2,9 +2,12 @@ import { CakeSize } from "./Cake";
 
 interface OrderItem {
     cake_id: number;
+    cake_name: string;  // Add cake name field
+    cake_image: string;  
     quantity: number;
     size: CakeSize;
     comment: string;
+    price: number;  // Add price field
 }
 
 interface OrderDetails {

@@ -14,6 +14,7 @@ const initialOrderDetails: OrderDetails = {
     time: '',
     orders: [],
     cartEmpty: true,
+    deliveryAddress: '',  // Add default delivery address
 };
 
 const OrderContext = createContext<{ 
@@ -41,22 +42,61 @@ const reducer = (state: OrderDetails, action: OrderAction): OrderDetails => {
                     }
                     return item;
                 })}
+        case 'UPDATE_QUANTITY':
+            return {
+                ...state,
+                orders: state.orders.map(item => {
+                    if (item.cake_id === action.payload.cake_id && item.size === action.payload.size) {
+                        return { ...item, quantity: action.payload.quantity };
+                    }
+                    return item;
+                })
+            }
         case 'REMOVE_ITEM':
-            return { ...state, orders: state.orders.filter(item => item.cake_id !== action.payload) }
-        case 'LOAD_ORDERS':
-            return { ...state, orders: action.payload }
+            return {
+                ...state,
+                orders: state.orders.filter(item => 
+                    !(item.cake_id === action.payload.cake_id && item.size === action.payload.size)
+                )
+            }
+        case 'LOAD_PERSISTED_STATE':
+            return { ...state, ...action.payload };
         case 'SET_CART_EMPTY':
             return { ...state, cartEmpty: action.payload };
+        case 'SET_DELIVERY_ADDRESS':
+            return { ...state, deliveryAddress: action.payload };
         default:
             return state;
     }
 }
 
 function OrderProvider({ children }: { children: React.ReactNode }) {
-
+    
     const [state, dispatch] = useReducer(reducer, initialOrderDetails);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
     const { placeOrder, loading, error } = useOrder();
+
+    useEffect(() => {
+        const persistedState = localStorage.getItem('cart');
+        console.log('persistedState:', persistedState);
+        if (persistedState) {
+            dispatch({ type: 'LOAD_PERSISTED_STATE', payload: JSON.parse(persistedState) });
+        }
+        console.log('state:', state);
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('cart', JSON.stringify(state));
+    }, [state]);
+
+    useEffect(() => {
+        // If authenticated, load orders from backend
+        if (isAuthenticated) {
+            //   loadOrdersFromBackend(); 
+        }
+    }, [isAuthenticated]);
     
     const handlePlaceOrder = async (cake_id: number, quantity: number, size: CakeSize) => {
         try {
@@ -66,13 +106,6 @@ function OrderProvider({ children }: { children: React.ReactNode }) {
             console.error('Error placing order:', err);
         }
     };
-
-    useEffect(() => {
-        // If authenticated, load orders from backend
-        if (isAuthenticated) {
-            //   loadOrdersFromBackend(); 
-        }
-    }, [isAuthenticated]);
 
     // useEffect(() => {
     //     const orders = localStorage.getItem('orders');

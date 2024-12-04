@@ -12,17 +12,17 @@ export default function CakeCard({ cake }: CakeCardProps) {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   return (
-    <div className="gap-2 rounded-lg bg-white m-1 shadow">
-      <h1 className="text-xl mt-1 font-bold">{cake.name}</h1>
+    <div className="border-t-2 border-_white p-2">
+      <h1 className="text-xl mt-1 font-medium">{cake.name}</h1>
       <Image
-        src={cake.image}
+        src={cake.images[0]}
         alt={cake.name}
         width={460}
         height={300}
         className="h-[240px] object-contain rounded-t-lg m-1"
       />
-      <div className="flex flex-col h-full justify-between">
-        <p className="text-sm mx-4">{cake.desc}</p>
+      <div className="flex flex-col h-full justify-between mt-1 px-4 text-left gap-2">
+        <p className="text-sm">{cake.desc}</p>
         <OrderDrawer
           cake={cake}
           isDrawerOpen={isDrawerOpen}

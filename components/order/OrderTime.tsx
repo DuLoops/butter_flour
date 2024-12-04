@@ -6,7 +6,6 @@ import {Input} from '../ui/input'
 import TimePicker from '@/components/ui/TimePicker'
 export default function OrderTime() {
     const { state, dispatch } = React.useContext(OrderContext)
-    const [time, setTime] = React.useState('14:00');
     return (
         <div>
             <h1>Select {state.order_method == 'Delivery' ? 'delivery' : 'pickup'} time</h1>

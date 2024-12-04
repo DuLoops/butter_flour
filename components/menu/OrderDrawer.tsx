@@ -21,6 +21,7 @@ interface OrderState {
     quantity: number;
     size: CakeSize;
     comment: string;
+    writing?: string;
 }
 
 type OrderAction =
@@ -28,6 +29,7 @@ type OrderAction =
     | { type: 'SET_COMMENT'; payload: string }
     | { type: 'SET_ORDER'; payload: OrderState }
     | { type: 'SET_SIZE'; payload: CakeSize }
+    | { type: 'SET_WRITING'; payload: string }
 
 const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
     switch (action.type) {
@@ -48,6 +50,11 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
             };
         case 'SET_ORDER':
             return action.payload;
+        case 'SET_WRITING':
+            return {
+                ...state,
+                writing: action.payload,
+            };
         default:
             return state;
     }
@@ -58,8 +65,6 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
     const [orderState, orderDispatch] = useReducer(orderReducer, { quantity: 1, size: cake.available_size[0], comment: '' });
 
     const formatPrice = (price: number) => `${price.toFixed(2)}`;
-    console.log(state.orders)
-
 
     const handleSubmit = () => {
         if (orderState.quantity === 0) {
@@ -73,9 +78,12 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     type: 'UPDATE_ITEM',
                     payload: {
                         cake_id: cake.id,
+                        cake_name: cake.name,
+                        cake_image: cake.images[0],
                         quantity: orderState.quantity,
                         size: orderState.size,
                         comment: orderState.comment,
+                        price: cake.prices[orderState.size],
                     },
                 });
             }
@@ -84,9 +92,12 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                 type: 'ADD_ITEM',
                 payload: {
                     cake_id: cake.id,
+                    cake_name: cake.name,
+                    cake_image: cake.images[0],
                     quantity: orderState.quantity,
                     size: orderState.size,
                     comment: orderState.comment,
+                    price: cake.prices[orderState.size],
                 },
             });
         }
@@ -105,7 +116,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
     return (
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
             <DrawerTrigger asChild>
-                <Button className="shadow m-2 bg-_pink" variant={'secondary'} onClick={() => setIsDrawerOpen(true)}>
+                <Button className="shadow bg-_pink" variant={'secondary'} onClick={() => setIsDrawerOpen(true)}>
                     Order
                 </Button>
             </DrawerTrigger>
@@ -116,7 +127,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                 <DrawerDescription className=''>
                     <div className='flex flex-col p-3 gap-3'>
                         <Image
-                            src={cake.image}
+                            src={cake.images[0]}
                             alt={cake.name}
                             width={460}
                             height={300}
@@ -169,8 +180,24 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
 }
 
 const NumberInput = ({ quantity, setQuantity }: { quantity: number; setQuantity: (quantity: number) => void }) => {
-    const increment = () => setQuantity(quantity < MAX_QUANTITY ? quantity + 1 : MAX_QUANTITY);
-    const decrement = () => setQuantity(quantity > 2 ? quantity - 1 : 1);
+    const increment = () => {
+        if (quantity < MAX_QUANTITY) {
+            setQuantity(quantity + 1);
+        }
+    };
+
+    const decrement = () => {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        }
+    };
+
+    const handleQuantityInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(e.target.value);
+        if (!isNaN(value) && value >= 1 && value <= MAX_QUANTITY) {
+            setQuantity(value);
+        }
+    };
 
     return (
         <div className="relative flex items-center max-w-[8rem]">
@@ -185,9 +212,11 @@ const NumberInput = ({ quantity, setQuantity }: { quantity: number; setQuantity:
                 </svg>
             </button>
             <input
-                type="text"
+                type="number"
                 value={quantity}
-                readOnly
+                onChange={handleQuantityInput}
+                min={1}
+                max={MAX_QUANTITY}
                 className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             />
             <button

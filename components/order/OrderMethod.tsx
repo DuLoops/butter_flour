@@ -8,7 +8,7 @@ export default function OrderMethod() {
 
   const { state, dispatch } = React.useContext(OrderContext)
   return (
-    <div className='flex flex-col m-3'>
+    <div className='flex flex-col'>
       <h1>Select pickup method</h1>
       <div className='flex flex-row justify-center gap-3 m-2'>
         <Button

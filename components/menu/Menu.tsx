@@ -4,11 +4,12 @@ import {cakeData} from '@/data/cakeData'
 
 export default function Menu() {
   return (
-    <div className='text-center'>
-        <h1 className='text-lg'>CAKES</h1>
-        <div className='flex flex-col gap-2 p-2 mb-[1000px]'>
-            {cakeData.map((cake) => (
-                <CakeCard key={cake.id} cake={cake} />
+    <div className='text-center mt-10 bg-white p-2'>
+        <h1 className='text-lg font-ms'>Cake Menu</h1>
+        <div className='flex flex-col gap-4 m-2'>
+            {cakeData.map((cake, index) => (
+
+                    <CakeCard cake={cake} key={index}/>
             ))}
         </div>
     </div>
