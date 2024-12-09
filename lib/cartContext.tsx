@@ -1,16 +1,16 @@
 "use client"
 import React, { createContext, useState, useEffect, useReducer } from 'react';
-import { OrderDetails, OrderAction } from '@/types/order';
+import { OrderDetails, OrderAction } from '@/types/Order';
 import { v4 as uuidv4 } from 'uuid';
 import useOrder from '@/hooks/useOrder';
-import { CakeSize } from '@/types/cake';
+import { CakeSize } from '@/types/Cake';
 const date = new Date()
 
 const generateOrderId = () => {
     const datePart = `${date.getDate()}${date.getMonth() + 1}`; // date and month
     const randomPart = Math.random().toString(36).substring(2, 7)
     return datePart + randomPart;
-}
+};
 
 const initialOrderDetails: OrderDetails = {
     id: generateOrderId(),
@@ -119,7 +119,7 @@ function OrderProvider({ children }: { children: React.ReactNode }) {
         if (typeof window !== 'undefined' && state.persistedCart == true) {
             localStorage.setItem('cart', JSON.stringify(state.orders));
         }
-    }, [state.orders]);
+    }, [state.orders, state.persistedCart]);
 
     useEffect(() => {
         // If authenticated, load orders from backend

@@ -1,7 +1,7 @@
 "use client"
 import Image from 'next/image'
 import React, { useContext, useState } from 'react'
-import { Cake } from '@/types/cake'
+import { Cake } from '@/types/Cake'
 import OrderDrawer from './OrderDrawer';
 
 interface CakeCardProps {

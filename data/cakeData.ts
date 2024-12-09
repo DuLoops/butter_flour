@@ -1,4 +1,4 @@
-import {Cake, CakeSize} from '@/types/cake'
+import {Cake, CakeSize} from '@/types/Cake'
 const cakeData: Cake[] = [
     {
         id: 1,

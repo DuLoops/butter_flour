@@ -26,7 +26,7 @@ export function DatePicker() {
           variant={"outline"}
           className={cn(
             "w-2/3 justify-between font-normal px-2",
-            !state.date && "text-muted-foreground"
+            !state.pickupDate && "text-muted-foreground"
           )}
         >
           {state.pickupDate ? format(state.pickupDate, "PPP") : <span>Pick a date</span>}
@@ -36,7 +36,7 @@ export function DatePicker() {
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={state.pickupDate}
+          selected={state.pickupDate || undefined}
           onSelect={setDate}
           initialFocus
         />

@@ -1,5 +1,4 @@
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
 
 export interface InputProps
@@ -46,4 +45,5 @@ const numberInput = React.forwardRef<HTMLInputElement, InputProps>(
     )
   }
 )
+numberInput.displayName = "numberInput"
 export { Input, numberInput }

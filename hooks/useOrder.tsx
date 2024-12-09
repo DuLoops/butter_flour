@@ -1,17 +1,21 @@
 import { useEffect } from 'react';
 import emailjs from '@emailjs/browser';
-import { OrderDetails } from '@/types/order';
+import { OrderDetails } from '@/types/Order';
 
 export default function useOrder() {
     useEffect(() => {
-        const public_key = process.env.EMAILJS_PULIC_KEY;
+        const public_key = process.env.EMAILJS_PUBLIC_KEY;
+        if (!public_key) {
+            console.error('EMAILJS_PUBLIC_KEY is not defined');
+            return;
+        }
         console.log(public_key);
-        emailjs.init('82G2kc4aCnqBmcQit');
+        emailjs.init(public_key);
     }, []);
     
     const placeOrder = async (orderDetail: OrderDetails) => {
         const templateParameter = {
-            pickupDate: orderDetail.pickupDate instanceof Date ? orderDetail.pickupDate.toLocaleDateString() : orderDetail.date,
+            pickupDate: orderDetail.pickupDate instanceof Date ? orderDetail.pickupDate.toLocaleDateString() : orderDetail.pickupDate,
             time: orderDetail.time,
             customer_name: orderDetail.customerName,
             customer_email: orderDetail.customerEmail,
@@ -22,8 +26,13 @@ export default function useOrder() {
         }
         
         try {
+            const service_id = process.env.EMAILJS_SERVICE_ID;
+            const template_id = process.env.EMAILJS_TEMPLATE_ID;
+            if (!service_id || !template_id) {
+                throw new Error('EMAILJS_SERVICE_ID or EMAILJS_TEMPLATE_ID is not defined');
+            }
             console.log(templateParameter);
-            // await emailjs.send('service_98l5d1b', 'template_8k8umbo', templateParameter);
+            await emailjs.send(service_id, template_id, templateParameter);
         } catch (err) {
             throw err;
         }

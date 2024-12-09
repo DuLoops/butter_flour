@@ -1,7 +1,7 @@
 "use client"
 import React, { useContext, useReducer, useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Cake, CakeSize } from '@/types/cake'
+import { Cake, CakeSize } from '@/types/Cake'
 import { Button } from '../ui/button';
 import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from '../ui/drawer';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';

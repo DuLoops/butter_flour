@@ -1,4 +1,4 @@
-import { CakeSize } from "./cake";
+import { CakeSize } from "./Cake";
 
 interface OrderItem {
     cake_id: number;
