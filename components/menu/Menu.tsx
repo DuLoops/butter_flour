@@ -8,7 +8,6 @@ export default function Menu() {
         <h1 className='text-lg font-ms'>Cake Menu</h1>
         <div className='flex flex-col gap-4 m-2'>
             {cakeData.map((cake, index) => (
-
                     <CakeCard cake={cake} key={index}/>
             ))}
         </div>

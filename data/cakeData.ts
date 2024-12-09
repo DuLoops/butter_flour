@@ -1,10 +1,10 @@
-import {Cake, CakeSize} from '@/types/Cake'
+import {Cake, CakeSize} from '@/types/cake'
 const cakeData: Cake[] = [
     {
         id: 1,
         name: 'Victoria Cake',
         priceRange: '20.00 ~ 30.00',
-        desc: 'Light pound cake with cream cheese cream, raspberry jam, and fresh garden toppings.',
+        desc: 'Light pound cake with cream cheese frosting, raspberry jam, and fresh garden toppings.',
         prices: {
             [CakeSize.SIX_INCH]: 20.00,
             [CakeSize.EIGHT_INCH]: 30.00

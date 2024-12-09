@@ -24,14 +24,14 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Meow+Script&family=Quicksand:wght@300..700&display=swap" rel="stylesheet" />
       </head>
-        <OrderProvider>
       <body className={'font-qs bg-_white'}>
+        <OrderProvider>
           <Nav />
-          <main className="overflow-x-hidden">
+          <main >
             {children}
           </main>
-      </body>
         </OrderProvider>
+      </body> 
     </html>
   );
 }

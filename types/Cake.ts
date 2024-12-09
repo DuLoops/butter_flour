@@ -16,7 +16,7 @@ interface Cake {
     name: string;
     priceRange: string;
     desc: string;
-    image: string;
+    images: string[];
     release_date?: string; // Or Date
     sale_quantity?: number;
     available_size: CakeSize[];

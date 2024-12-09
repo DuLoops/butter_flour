@@ -17,7 +17,7 @@ export function DatePicker() {
     const { state, dispatch } = useContext(OrderContext)
 
     const setDate = (day: Date | undefined) => {
-        dispatch({type:'SET_DATE', payload:(day)})
+        dispatch({type:'SET_DATE', payload:day})
     }
   return (
     <Popover>
@@ -29,14 +29,14 @@ export function DatePicker() {
             !state.date && "text-muted-foreground"
           )}
         >
-          {state.date ? format(state.date, "PPP") : <span>Pick a date</span>}
+          {state.pickupDate ? format(state.pickupDate, "PPP") : <span>Pick a date</span>}
           <FaRegCalendarAlt className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
-          selected={state.date}
+          selected={state.pickupDate}
           onSelect={setDate}
           initialFocus
         />

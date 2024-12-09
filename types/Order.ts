@@ -1,4 +1,4 @@
-import { CakeSize } from "./Cake";
+import { CakeSize } from "./cake";
 
 interface OrderItem {
     cake_id: number;
@@ -14,11 +14,16 @@ interface OrderDetails {
     id: string;
     customer_id: null | string;
     order_method: 'Delivery' | 'Pickup';
-    date: Date;
-    time: string;
+    orderDate: Date;
+    pickupDate: Date | null;
+    time: string | null;
     orders: OrderItem[];
-    cartEmpty: boolean;
     deliveryAddress?: string; // Optional if the order is for delivery
+    customerName: string;
+    customerEmail: string;
+    customerPhone?: string;
+    persistedCart: boolean; 
+    totalPrice: number;
 }
 
 interface OrderAction {

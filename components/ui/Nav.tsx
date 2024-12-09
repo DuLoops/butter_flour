@@ -18,11 +18,12 @@ export default function Nav() {
   const { state } = useContext(OrderContext);
   const isCart = usePathname() == '/cart';
 
+  const cartEmpty = state.orders.length === 0;
 
   return (
 
       <nav className='grid grid-cols-3 w-screen p-2 bg-_blue items-center sticky top-0 z-50'>
-        <Link href={isCart ? '/' : '/cart'} scroll={false} className={`flex justify-center items-center size-10 rounded-full ${!isCart && !state.cartEmpty ? 'bg-_pink shadow' : ''}`}>
+        <Link href={isCart ? '/' : '/cart'} scroll={false} className={`flex justify-center items-center size-10 rounded-full ${!isCart && !cartEmpty ? 'bg-_pink shadow' : ''}`}>
           {isCart ? <FaHome className='size-7'/> : <FaGift className='size-7'/>}
         </Link>
         <Link href={'/'} className='col-start-2 flex justify-center'>
