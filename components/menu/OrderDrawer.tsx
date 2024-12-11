@@ -3,13 +3,12 @@ import React, { useContext, useReducer, useEffect, useState } from 'react'
 import Image from 'next/image'
 import { Cake, CakeSize } from '@/types/Cake'
 import { Button } from '../ui/button';
-import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerFooter, DrawerTitle, DrawerDescription } from '../ui/drawer';
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '../ui/dialog';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { OrderContext } from '@/lib/cartContext';
 import { Label } from "@/components/ui/label"
 import { MAX_QUANTITY } from '@/lib/constants';
 import { IoClose } from "react-icons/io5";
-import { DialogTitle } from '@radix-ui/react-dialog';
 import ImageCarousel from './ImageCarousel'
 interface OrderDrawerProps {
     cake: Cake;
@@ -102,62 +101,62 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
     };
 
     return (
-        <Drawer open={isDrawerOpen} >
-            <DrawerTrigger asChild>
+        <Dialog open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+            <DialogTrigger asChild>
                 <Button className="shadow bg-_pink" variant={'secondary'} onClick={() => setIsDrawerOpen(true)}>
                     Order
                 </Button>
-            </DrawerTrigger>
-            <DrawerContent className="flex flex-col justify-center items-center px-3">
-                <DrawerHeader>
-                        <DialogTitle className="text-lg mt-1 font-bold text-black">{cake.name}</DialogTitle>
-                </DrawerHeader>
-                    <div className={'flex flex-col items-center justify-center px-4'}>
-                        <ImageCarousel images={cake.images} />
-                        <DrawerDescription >{cake.desc}</DrawerDescription>
-                    </div>
-                    <div className="flex flex-col gap-4 items-stretch mt-2 rounded-xl border-_blue border-2 p-4 w-full">
-                        <div className='flex flex-row items-center gap-10'>
-                            <div>
-                                <Label htmlFor="Quantity" className=''>Quantity:</Label>
-                                <NumberInput quantity={orderState.quantity} setQuantity={setQuantity} />
-                            </div>
-                            <div>
-                                <Label htmlFor="Size" className=''>Size:</Label>
-                                <RadioGroup
-                                    value={orderState.size.toString()}
-                                    id='Size'
-                                    onValueChange={(value) => orderDispatch({ type: 'SET_SIZE', payload: value as CakeSize })}
-                                >
-                                    {cake.available_size.map((size) => (
-                                        <RadioGroupItem key={size} value={size} id={size} className="text-black">
-                                                <Label htmlFor={size}>{`${size} ($${cake.prices[size]})`}</Label>
-                                        </RadioGroupItem>
-                                    ))}
-                                </RadioGroup>
-                            </div>
+            </DialogTrigger>
+            <DialogContent className="flex flex-col justify-around items-center px-3">
+                <DialogHeader>
+                    <DialogTitle className="text-lg mt-1 font-bold text-black">{cake.name}</DialogTitle>
+                </DialogHeader>
+                <div className={'flex flex-col items-center justify-center px-4'}>
+                    <ImageCarousel images={cake.images} />
+                    <DialogDescription>{cake.desc}</DialogDescription>
+                </div>
+                <div className="flex flex-col gap-2 items-stretch mt-2 rounded-xl border-_blue border-2 p-2 w-full">
+                    <div className='flex flex-row items-center gap-10'>
+                        <div>
+                            <Label htmlFor="Quantity" className='m-1' >Quantity:</Label>
+                            <NumberInput quantity={orderState.quantity} setQuantity={setQuantity} />
                         </div>
-                        <div className="flex flex-col">
-                            <Label htmlFor="comment">Special Request</Label>
-                            <textarea
-                                value={orderState.comment}
-                                id='comment'
-                                onChange={(e) => setSpecialNote(e.target.value)}
-                                placeholder="Add a special note"
-                                className="w-full h-24 p-2 border border-gray-300 rounded"
-                            />
+                        <div>
+                            <Label htmlFor="Size">Size:</Label>
+                            <RadioGroup
+                                value={orderState.size.toString()}
+                                id='Size'
+                                onValueChange={(value) => orderDispatch({ type: 'SET_SIZE', payload: value as CakeSize })}
+                            >
+                                {cake.available_size.map((size) => (
+                                    <RadioGroupItem key={size} value={size} id={size} className="text-black">
+                                        <Label htmlFor={size}>{`${size} ($${cake.prices[size]})`}</Label>
+                                    </RadioGroupItem>
+                                ))}
+                            </RadioGroup>
                         </div>
                     </div>
-                <DrawerFooter className='flex flex-row'>
+                    <div className="flex flex-col">
+                        <Label htmlFor="comment" className='m-1'>Special Request</Label>
+                        <textarea
+                            value={orderState.comment}
+                            id='comment'
+                            onChange={(e) => setSpecialNote(e.target.value)}
+                            placeholder="Add a special note"
+                            className="w-full h-24 p-2 border border-gray-300 rounded"
+                        />
+                    </div>
+                </div>
+                <DialogFooter className='flex flex-row'>
                     <button className="size-10 bg-_white rounded-lg shadow" onClick={() => setIsDrawerOpen(false)}>
                         <IoClose className='size-7 m-auto' />
                     </button>
                     <Button variant={'secondary'} className="bg-_pink ml-2 h-10 shadow" onClick={handleSubmit}>
                         Add to order {'$' + formatPrice(orderState.quantity * cake.prices[orderState.size])}
                     </Button>
-                </DrawerFooter>
-            </DrawerContent>
-        </Drawer>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     );
 }
 
