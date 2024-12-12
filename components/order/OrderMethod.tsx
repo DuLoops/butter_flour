@@ -8,16 +8,16 @@ export default function OrderMethod() {
 
   const { state, dispatch } = React.useContext(OrderContext)
   return (
-    <div className='flex flex-col'>
+    <div className='flex flex-col md:w-1/2 '>
       <h1>Select pickup method</h1>
-      <div className='flex flex-row justify-center gap-3 m-2'>
+      <div className='flex flex-row justify-center gap-3 p-2 md:flex-col'>
         <Button
-          className='h-[60px] w-full'
+          className='h-[60px] w-1/2 md:w-full'
           variant={`${state.order_method == 'Pickup' ? 'default' : 'outline'}`}
           onClick={() => dispatch({ type: "SET_ORDER_METHOD", payload: "Pickup" })}
         >Pick up<br />in downtown</Button>
         <Button
-          className='h-[60px] w-full'
+          className='h-[60px] w-1/2 md:w-full'
           variant={`${state.order_method == 'Delivery' ? 'default' : 'outline'}`}
           onClick={() => dispatch({ type: "SET_ORDER_METHOD", payload: "Delivery" })}
         >

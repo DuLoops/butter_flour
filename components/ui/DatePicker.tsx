@@ -20,7 +20,7 @@ export function DatePicker() {
         dispatch({type:'SET_DATE', payload:day})
     }
   return (
-    <Popover>
+    <Popover >
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
@@ -33,7 +33,7 @@ export function DatePicker() {
           <FaRegCalendarAlt className="h-4 w-4" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
+      <PopoverContent className="w-auto p-0" >
         <Calendar
           mode="single"
           selected={state.pickupDate || undefined}

@@ -7,14 +7,14 @@ import TimePicker from '@/components/ui/TimePicker'
 export default function OrderTime() {
     const { state, dispatch } = React.useContext(OrderContext)
     return (
-        <div>
+        <div className='md:w-1/3'>
             <h1>Select {state.order_method == 'Delivery' ? 'delivery' : 'pickup'} time</h1>
-            <div className='flex flex-col  p-3 gap-3'>
+            <div className='flex flex-col p-3 gap-3'>
                 <div className='flex flex-row items-center justify-between'>
                     <p>Date</p>
                     <DatePicker />
                 </div>
-                <div className='flex flex-row items-center justify-between'>
+                <div className='flex flex-row items-center justify-between '>
                     <p>Time</p>
                     {/* <Input type='time'  value={time} onChange={(e)=>setTime(e.target.value)} min='14:00' max='19:00'/> */}
                     <TimePicker />

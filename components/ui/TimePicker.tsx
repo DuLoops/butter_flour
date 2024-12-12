@@ -28,13 +28,13 @@ export default function TimePicker() {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant={"outline"} className='w-2/3 justify-between font-normal px-2'>
+                    variant={"outline"} className='w-2/3 justify-between font-normal px-2 '>
                         {time}
                     <FaRegClock className="h-4 w-4"/>         
                 </Button>
             </PopoverTrigger>
             <PopoverContent>
-                <div className='grid grid-cols-2 text-center gap-1'>
+                <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 text-center gap-1 w-full'>
                     {availableTimes.weekday.map((time, i) => <Button variant={'outline'} key={i} onClick={()=>handleTimeChange(time)}>{time}</Button>)}
                 </div>
             </PopoverContent>
