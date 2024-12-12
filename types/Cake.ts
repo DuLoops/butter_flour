@@ -7,6 +7,7 @@ interface Customer {
 }
 
 enum CakeSize {
+    FOUR_INCH = '4 "',
     SIX_INCH = '6 "',
     EIGHT_INCH = '8 "' 
 }
