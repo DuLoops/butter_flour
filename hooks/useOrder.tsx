@@ -4,8 +4,11 @@ import { OrderDetails } from '@/types/Order';
 
 export default function useOrder() {
     useEffect(() => {
-        emailjs.init(process.env.EMAILJS_PUBLIC_KEY);
-    }, []);
+        const emailJsPublicKey = process.env.EMAILJS_PUBLIC_KEY;
+        if (!emailJsPublicKey) {
+            throw new Error('EMAILJS_PUBLIC_KEY is not defined');
+        }
+        emailjs.init(emailJsPublicKey);    }, []);
     
     const placeOrder = async (orderDetail: OrderDetails) => {
         const templateParameter = {
