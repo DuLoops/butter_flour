@@ -3,7 +3,7 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, collection, addDoc, doc, getDoc, query, where, getDocs } from "firebase/firestore";
 import { getAuth } from 'firebase/auth';
 
-import OrderDetails from '@/types/OrderDetails';
+import {OrderDetails, OrderItem} from '@/types/Order';
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
     apiKey: process.env.FIREBASE_API_KEY,
@@ -41,7 +41,7 @@ export const getOrderFromFirestore = async (orderId: string) => {
                 ...orderData,
                 pickupDate: orderData.pickupDate.toISOString(),
                 orderDate: orderData.orderDate.toISOString(),
-                orders: orderData.orders.map(item => ({
+                orders: orderData.orders.map((item: OrderItem) => ({
                     ...item,
                     price: item.price.toString()
                 }))

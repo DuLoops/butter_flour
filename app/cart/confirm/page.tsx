@@ -4,10 +4,25 @@ import { useSearchParams } from 'next/navigation';
 import { Suspense, useEffect, useState } from 'react';
 import useOrder from '@/hooks/useOrder';
 
+interface OrderItem {
+    quantity: number;
+    cake_name: string;
+    size: string;
+    price: number;
+}
+
+interface Order {
+    pickupDate: string;
+    time: string;
+    orders: OrderItem[];
+    totalPrice: number;
+    orderProgress: string;
+}
+
 function OrderDetails() {
     const searchParams = useSearchParams();
     const { getOrder } = useOrder();
-    const [order, setOrder] = useState(null);
+    const [order, setOrder] = useState<Order | null>(null);
 
     useEffect(() => {
         const fetchOrder = async () => {

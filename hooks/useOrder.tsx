@@ -6,12 +6,17 @@ import emailjs from '@emailjs/browser';
 export default function useOrder() {
 
     const sendEmail = async (emailDetail: any) => {
-        emailjs.send(process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID, process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID, emailDetail, {publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY})
+        emailjs.send(
+            process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID as string, 
+            process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID as string, 
+            emailDetail, 
+            { publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY as string }
+        );
     }
     const placeOrder = async (orderDetail: OrderDetails) => {
         const completedOrderDetails = {
             ...orderDetail,
-            orderProgress: 'Received'
+            orderProgress: OrderProgress.RECEIVED
         };
        
         
