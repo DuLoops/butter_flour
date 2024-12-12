@@ -4,13 +4,7 @@ import { OrderDetails } from '@/types/Order';
 
 export default function useOrder() {
     useEffect(() => {
-        const public_key = process.env.EMAILJS_PUBLIC_KEY;
-        if (!public_key) {
-            console.error('EMAILJS_PUBLIC_KEY is not defined');
-            return;
-        }
-        console.log(public_key);
-        emailjs.init(public_key);
+        emailjs.init(process.env.EMAILJS_PUBLIC_KEY);
     }, []);
     
     const placeOrder = async (orderDetail: OrderDetails) => {
@@ -28,11 +22,9 @@ export default function useOrder() {
         try {
             const service_id = process.env.EMAILJS_SERVICE_ID;
             const template_id = process.env.EMAILJS_TEMPLATE_ID;
-            if (!service_id || !template_id) {
-                throw new Error('EMAILJS_SERVICE_ID or EMAILJS_TEMPLATE_ID is not defined');
-            }
+            console.log(service_id);
             console.log(templateParameter);
-            await emailjs.send(service_id, template_id, templateParameter);
+            // await emailjs.send(service_id, template_id, templateParameter);
         } catch (err) {
             throw err;
         }

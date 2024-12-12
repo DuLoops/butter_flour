@@ -57,7 +57,6 @@ export default function CheckoutPage() {
             try {
                 placeOrder(state);
             } catch (err) {
-                console.log(err);
                 setFormError('Failed to place order. Please try again.');
             } finally {
                 const params = new URLSearchParams({

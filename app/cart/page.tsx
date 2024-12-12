@@ -18,7 +18,6 @@ const formatPrice = (value: number) => {
 export default function Cart() {
   const { state, dispatch } = useContext(OrderContext);
 
-  console.log(state)
   const updateQuantity = (cake_id: number, size: string, newQuantity: number) => {
     if (newQuantity < 1 || newQuantity > MAX_QUANTITY) return;
 
