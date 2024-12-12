@@ -13,7 +13,7 @@ const generateOrderId = () => {
 };
 
 const initialOrderDetails: OrderDetails = {
-    id: generateOrderId(),
+    orderId: generateOrderId(),
     customer_id: null,
     order_method: 'Pickup',
     orderDate: date,

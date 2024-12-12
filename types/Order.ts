@@ -10,8 +10,16 @@ interface OrderItem {
     price: number;  // Add price field
 }
 
+export enum OrderProgress {
+    RECEIVED = 'Order received, waiting for confirmation',
+    CONFIRMED = 'Order confirmed, preparing for pickup',
+    READY = 'Order ready for pickup',
+    DELIVERED = 'Order delivered',
+    CANCELLED = 'Order cancelled'
+}
+
 interface OrderDetails {
-    id: string;
+    orderId: string;
     customer_id: null | string;
     order_method: 'Delivery' | 'Pickup';
     orderDate: Date;
@@ -24,6 +32,7 @@ interface OrderDetails {
     customerPhone?: string;
     persistedCart: boolean; 
     totalPrice: number;
+    OrderProgress?: string;  // Add order progress field
 }
 
 interface OrderAction {

@@ -7,6 +7,7 @@ import OrderTime from '@/components/order/OrderTime';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { format } from "date-fns"
+
 export default function CheckoutPage() {
     const router = useRouter();
     const { state, dispatch } = useContext(OrderContext);
@@ -60,7 +61,7 @@ export default function CheckoutPage() {
                 setFormError('Failed to place order. Please try again.');
             } finally {
                 const params = new URLSearchParams({
-                    orderID: state.id
+                    orderID: state.orderId
                 });
                 router.push(`/cart/confirm?${params.toString()}`);
                 dispatch({ type: 'CLEAR_CART' });
