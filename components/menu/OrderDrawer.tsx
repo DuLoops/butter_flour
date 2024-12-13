@@ -20,6 +20,7 @@ interface OrderState {
     size: CakeSize;
     comment: string;
     writing?: string;
+    isGlutenFree: boolean;
 }
 
 type OrderAction =
@@ -28,6 +29,7 @@ type OrderAction =
     | { type: 'SET_ORDER'; payload: OrderState }
     | { type: 'SET_SIZE'; payload: CakeSize }
     | { type: 'SET_WRITING'; payload: string }
+    | { type: 'SET_GLUTEN_FREE'; payload: boolean }
 
 const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
     switch (action.type) {
@@ -48,6 +50,11 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
             };
         case 'SET_ORDER':
             return action.payload;
+        case 'SET_GLUTEN_FREE':
+            return {
+                ...state,
+                isGlutenFree: action.payload,
+            };
         default:
             return state;
     }
@@ -56,9 +63,10 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
 const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDrawerOpen }) => {
     const formatPrice = (price: number) => `${price.toFixed(2)}`;
     const { state, dispatch } = useContext(OrderContext);
-    const [orderState, orderDispatch] = useReducer(orderReducer, { quantity: 1, size: cake.available_size[0], comment: '' });
+    const [orderState, orderDispatch] = useReducer(orderReducer, { quantity: 1, size: cake.available_size[0], comment: '', isGlutenFree: false });
 
     const handleSubmit = () => {
+        const price = cake.prices[orderState.size] + (orderState.isGlutenFree ? 2 : 0);
         if (state.orders.some(item => item.cake_id === cake.id && item.size === orderState.size)) {
             dispatch({
                 type: 'UPDATE_ITEM',
@@ -69,7 +77,8 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     quantity: orderState.quantity,
                     size: orderState.size,
                     comment: orderState.comment,
-                    price: cake.prices[orderState.size],
+                    price: price,
+                    isGlutenFree: orderState.isGlutenFree,
                 },
             });
         } else {
@@ -82,7 +91,8 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     quantity: orderState.quantity,
                     size: orderState.size,
                     comment: orderState.comment,
-                    price: cake.prices[orderState.size],
+                    price: price,
+                    isGlutenFree: orderState.isGlutenFree,
                 },
             });
         }
@@ -106,7 +116,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     Order
                 </Button>
             </DialogTrigger>
-            <DialogContent className="flex flex-col justify-around items-center px-3 lg:p-20">
+            <DialogContent className="flex flex-col justify-around items-center lg:p-20 p-2">
                 <DialogHeader>
                     <DialogTitle className="text-lg mt-1 font-bold text-black">{cake.name}</DialogTitle>
                 </DialogHeader>
@@ -114,12 +124,12 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     <ImageCarousel images={cake.images} />
                     <DialogDescription>{cake.desc}</DialogDescription>
                 </div>
-                <div className="flex flex-col gap-2 items-stretch mt-2 rounded-xl border-_blue border-2 p-2 w-full">
-                    <div className='flex flex-row items-center gap-10'>
-                        <div>
-                            <Label htmlFor="Quantity" className='m-1' >Quantity:</Label>
-                            <NumberInput quantity={orderState.quantity} setQuantity={setQuantity} />
-                        </div>
+                <div className="flex flex-col gap-2 items-stretch mt-1 rounded-xl border-_blue border-2 p-3 w-full">
+                    <div className='flex flex-row justify-center items-center gap-2'>
+                        <Label htmlFor="Quantity" className='m-1' >Quantity:</Label>
+                        <NumberInput quantity={orderState.quantity} setQuantity={setQuantity} />
+                    </div>
+                    <div className='flex flex-row items-start gap-10 justify-between'>
                         <div>
                             <Label htmlFor="Size">Size:</Label>
                             <RadioGroup
@@ -134,6 +144,21 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                                 ))}
                             </RadioGroup>
                         </div>
+                        <div>
+                            <Label htmlFor="GlutenFree">Options</Label>
+                            <RadioGroup
+                                value={orderState.isGlutenFree.toString()}
+                                id='GlutenFree'
+                                onValueChange={(value) => orderDispatch({ type: 'SET_GLUTEN_FREE', payload: value === 'true' })}
+                            >
+                                <RadioGroupItem value="false" id="glutenFreeNo" className="text-black">
+                                    <Label htmlFor="glutenFreeNo">None</Label>
+                                </RadioGroupItem>
+                                <RadioGroupItem value="true" id="glutenFreeYes" className="text-black">
+                                    <Label htmlFor="glutenFreeYes">Gluten free (+$2.00)</Label>
+                                </RadioGroupItem>
+                            </RadioGroup>
+                        </div>
                     </div>
                     <div className="flex flex-col">
                         <Label htmlFor="comment" className='m-1'>Special Request</Label>
@@ -142,7 +167,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                             id='comment'
                             onChange={(e) => setSpecialNote(e.target.value)}
                             placeholder="Add a special note"
-                            className="w-full h-24 p-2 border border-gray-300 rounded"
+                            className="w-full h-14 p-2 border border-gray-300 rounded"
                         />
                     </div>
                 </div>

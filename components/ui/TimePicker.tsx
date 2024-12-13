@@ -6,10 +6,11 @@ import { FaRegClock } from "react-icons/fa";
 
 import { OrderContext } from "@/lib/cartContext"
 
-const availableTimes ={
-    weekday: ['Anytime', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM', '5:00 PM', '5:30 PM', '6:00 PM', '6:30 PM', '7:00 PM', '7:30 PM', '8:00 PM'],
-    weekend: ['Anytime', '8:00 AM', '8:30 AM', '9:00 AM', '9:30 AM', '10:00 AM', '10:30 AM', '11:00 AM', '11:30 AM', '12:00 PM', '12:30 PM', '1:00 PM', '1:30 PM', '2:00 PM', '2:30 PM', '3:00 PM', '3:30 PM', '4:00 PM', '4:30 PM']
-}
+const availableTimes = {
+    weekday: ['Anytime', '2~4 PM', '4~6 PM', '6~8 PM'],
+    weekend: ['Anytime', '8~10 AM', '10~12 PM', '12~2 PM', '2~4 PM', '4~6PM']
+};
+
 export default function TimePicker() {
     const [time, setTime] = useState('Anytime')
     const [open, setOpen] = useState(false)
@@ -24,6 +25,18 @@ export default function TimePicker() {
         setOpen(false)
     }
 
+    const isWeekend = (date: Date) => {
+        const day = date.getDay();
+        return day === 5 || day === 6; // Friday and Saturday
+    }
+
+    const getAvailableTimes = () => {
+        if (state.pickupDate && (state.pickupDate.getDay() == 5 || state.pickupDate.getDay() == 6)) {
+            return availableTimes.weekend;
+        }
+        return availableTimes.weekday;
+    }
+
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -35,7 +48,7 @@ export default function TimePicker() {
             </PopoverTrigger>
             <PopoverContent>
                 <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 text-center gap-1 w-full'>
-                    {availableTimes.weekday.map((time, i) => <Button variant={'outline'} key={i} onClick={()=>handleTimeChange(time)}>{time}</Button>)}
+                    {getAvailableTimes().map((time, i) => <Button variant={'outline'} key={i} onClick={()=>handleTimeChange(time)}>{time}</Button>)}
                 </div>
             </PopoverContent>
         </Popover>

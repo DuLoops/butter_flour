@@ -120,7 +120,7 @@ export default function CheckoutPage() {
 
                 {state.order_method === 'Delivery' && (
                     <div>
-                        <label className="block mb-1">Delivery Address *</label>
+                        <label className="block mb-1">Delivery Address * (Victoria Only)</label>
                         <input 
                             type="text" 
                             name="address" 
@@ -133,10 +133,11 @@ export default function CheckoutPage() {
 
                 <div className="border-t mt-4 flex flex-col gap-2 bg-white rounded-lg p-1">
                     <p>Order Method: {state.order_method}</p>
-                    <p>Delivery Date: {state.pickupDate ? format(state.pickupDate, "PPP") : 'Not selected'}</p>
-                    <p>Delivery Time: {state.time}</p> 
+                    <p>{state.order_method === 'Pickup' ? 'Pickup Date' : 'Delivery Date'}: {state.pickupDate ? format(state.pickupDate, "PPP") : 'Not selected'}</p>
+                    <p>{state.order_method === 'Pickup' ? 'Pickup Time' : 'Delivery Time'}: {state.time}</p>
                     {state.order_method === 'Pickup' && <div><p>Pickup Location:</p><a href='https://maps.app.goo.gl/7rBrXKxE8CbnJo3c8' target='_blank' rel='noopener noreferrer' className='text-blue500 underline'>Heywood Ave & Pendergast St</a></div>}
                     {state.order_method === 'Delivery' && <p>Delivery Address: {state.deliveryAddress}</p>}
+                    {state.order_method === 'Delivery' && <p>Delivery Fee: ${state.deliveryFee?.toFixed(2)}</p>}
                     <p className="font-bold">Total: ${state.totalPrice.toFixed(2)}</p>
                 </div>
 

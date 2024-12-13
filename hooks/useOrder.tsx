@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { OrderDetails, OrderProgress} from '@/types/Order';
+import { OrderDetails, OrderProgress, OrderItem } from '@/types/Order';
 import { saveOrderToFirestore, getOrderFromFirestore } from '@/lib/firebase';
 import emailjs from '@emailjs/browser';
 
@@ -27,7 +27,7 @@ export default function useOrder() {
             customer_email: orderDetail.customerEmail,
             customer_phone: orderDetail.customerPhone,
             order_method: orderDetail.order_method,
-            orders: orderDetail.orders.map(item => `${item.quantity} x ${item.cake_name} (size: ${item.size}) (price: ${item.price})`).join('\n'),
+            orders: orderDetail.orders.map((item: OrderItem) => `${item.quantity} x ${item.cake_name} (size: ${item.size}) (price: ${item.price})`).join('\n'),
             total_price: orderDetail.totalPrice,
             orderDetails: JSON.stringify(orderDetail),
         };

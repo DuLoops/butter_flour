@@ -25,7 +25,8 @@ const initialOrderDetails: OrderDetails = {
     customerEmail: '',
     customerPhone: '',
     persistedCart: false,
-    totalPrice: 0  
+    totalPrice: 0,
+    deliveryFee: 0  // Add default delivery fee
 };
 
 const OrderContext = createContext<{ 
@@ -37,7 +38,11 @@ const OrderContext = createContext<{
 const reducer = (state: OrderDetails, action: OrderAction): OrderDetails => {
     switch (action.type) {
         case 'SET_ORDER_METHOD': 
-            return { ...state, order_method: action.payload };
+            return { 
+                ...state, 
+                order_method: action.payload,
+                deliveryFee: action.payload === 'Delivery' ? 5 : 0  // Set delivery fee
+            };
         case 'SET_DATE':
             return {...state, pickupDate: action.payload}
         case 'SET_TIME':
@@ -110,9 +115,9 @@ function OrderProvider({ children }: { children: React.ReactNode }) {
     }, []);
 
     useEffect(() => {
-        const totalPrice = state.orders.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+        const totalPrice = state.orders.reduce((sum, item) => sum + (item.price * item.quantity), 0) + (state.deliveryFee || 0);
         dispatch({ type: 'SET_TOTAL_PRICE', payload: totalPrice });
-    }, [state.orders]);
+    }, [state.orders, state.deliveryFee]);
 
     // Save state to localStorage only on client side
     useEffect(() => {

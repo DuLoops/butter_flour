@@ -8,6 +8,7 @@ interface OrderItem {
     size: CakeSize;
     comment: string;
     price: number;  // Add price field
+    isGlutenFree: boolean;  // Add isGlutenFree field
 }
 
 export enum OrderProgress {
@@ -32,7 +33,8 @@ interface OrderDetails {
     customerPhone?: string;
     persistedCart: boolean; 
     totalPrice: number;
-    OrderProgress?: string;  // Add order progress field
+    deliveryFee?: number;  // Add delivery fee field
+    OrderProgress?: OrderProgress;  // Change type to OrderProgress enum
 }
 
 interface OrderAction {
