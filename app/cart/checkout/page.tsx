@@ -131,10 +131,11 @@ export default function CheckoutPage() {
                     </div>
                 )}
 
-                <div className="border-t pt-4 mt-4 flex flex-col gap-1">
+                <div className="border-t mt-4 flex flex-col gap-2 bg-white rounded-lg p-1">
                     <p>Order Method: {state.order_method}</p>
-                    <p>Delivery Date: {state.pickupDate && format(state.pickupDate, "PPP")}</p>
+                    <p>Delivery Date: {state.pickupDate ? format(state.pickupDate, "PPP") : 'Not selected'}</p>
                     <p>Delivery Time: {state.time}</p> 
+                    {state.order_method === 'Pickup' && <div><p>Pickup Location:</p><a href='https://maps.app.goo.gl/7rBrXKxE8CbnJo3c8' target='_blank' rel='noopener noreferrer' className='text-blue500 underline'>Heywood Ave & Pendergast St</a></div>}
                     {state.order_method === 'Delivery' && <p>Delivery Address: {state.deliveryAddress}</p>}
                     <p className="font-bold">Total: ${state.totalPrice.toFixed(2)}</p>
                 </div>

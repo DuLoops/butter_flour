@@ -15,7 +15,7 @@ export default function OrderMethod() {
           className='h-[60px] w-1/2 md:w-full'
           variant={`${state.order_method == 'Pickup' ? 'default' : 'outline'}`}
           onClick={() => dispatch({ type: "SET_ORDER_METHOD", payload: "Pickup" })}
-        >Pick up<br />in downtown</Button>
+        >Pick up<br />at Beacon Hill Park</Button>
         <Button
           className='h-[60px] w-1/2 md:w-full'
           variant={`${state.order_method == 'Delivery' ? 'default' : 'outline'}`}
