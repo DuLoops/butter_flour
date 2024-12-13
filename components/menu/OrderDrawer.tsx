@@ -1,6 +1,5 @@
 "use client"
-import React, { useContext, useReducer, useEffect, useState } from 'react'
-import Image from 'next/image'
+import React, { useContext, useReducer } from 'react'
 import { Cake, CakeSize } from '@/types/Cake'
 import { Button } from '../ui/button';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '../ui/dialog';
@@ -107,7 +106,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     Order
                 </Button>
             </DialogTrigger>
-            <DialogContent className="flex flex-col justify-around items-center px-3">
+            <DialogContent className="flex flex-col justify-around items-center px-3 lg:p-20">
                 <DialogHeader>
                     <DialogTitle className="text-lg mt-1 font-bold text-black">{cake.name}</DialogTitle>
                 </DialogHeader>
