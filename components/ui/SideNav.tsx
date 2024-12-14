@@ -3,7 +3,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import { menuItems } from '@/lib/data';
 import Link from 'next/link';
 import {motion} from 'framer-motion';
-import { AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineInstagram, AiOutlineMail } from "react-icons/ai";
 
 
 interface SideNavProps {
@@ -14,11 +14,11 @@ export default function SideNav({ setSideMenuOpen }: SideNavProps) {
     return (
         <motion.div 
             initial={{width: 0}}
-            animate={{width: '80vw'}}
+            animate={{width: '90vw'}}
             exit={{
                 width: 0,
               }}
-            className="top-0 right-0 fixed h-screen bg-_pink shadow-lg p-3 flex flex-col justify-between"
+            className="top-0 left-0 fixed h-screen bg-_pink shadow-lg p-3 flex flex-col justify-between"
         >
             <button className="self-end top-0 right-0 p-2" onClick={() => {setSideMenuOpen(false)}}>
                 <AiOutlineClose className='text-2xl' />
@@ -30,11 +30,17 @@ export default function SideNav({ setSideMenuOpen }: SideNavProps) {
                     </li>
                 ))}
             </ol>
-
-            <a href="https://www.instagram.com/butterflourvictoria/" target="_blank" rel="noreferrer" className='flex items-center'>
-                <AiOutlineInstagram className='size-10' />
-                <p className='text-xl'>@butterflourvictoria</p>
-            </a>
+            <div className='self-center flex flex-col gap-1' >
+                <a href='mailto:butterflourcake@gmail.com' className='flex items-center'>
+                    <AiOutlineMail className='size-7' />
+                    <span className='ml-1 underline underline-offset-2 decoration-_blue'>butterflourcake@gmail.com</span>
+                    </a>
+                
+                <a href="https://www.instagram.com/butterflourvictoria/" target="_blank" rel="noreferrer" className='flex items-center'>
+                    <AiOutlineInstagram className='size-7' />
+                    <p className='underline ml-1 decoration-_blue underline-offset-2'>@butterflourvictoria</p>
+                </a>
+            </div>
         </motion.div>
     )
 }

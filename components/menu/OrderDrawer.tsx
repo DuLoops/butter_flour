@@ -112,7 +112,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
     return (
         <Dialog open={isDrawerOpen} onOpenChange={setIsDrawerOpen} >
             <DialogTrigger asChild>
-                <Button className="shadow bg-_pink" variant={'secondary'} onClick={() => setIsDrawerOpen(true)}>
+                <Button onClick={() => setIsDrawerOpen(true)}>
                     Order
                 </Button>
             </DialogTrigger>
