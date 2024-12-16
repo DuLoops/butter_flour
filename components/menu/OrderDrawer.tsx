@@ -176,7 +176,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                         <IoClose className='size-7 m-auto' />
                     </button>
                     <Button variant={'secondary'} className="bg-_pink ml-2 h-10 shadow" onClick={handleSubmit}>
-                        Add to order {'$' + formatPrice(orderState.quantity * cake.prices[orderState.size])}
+                        Add to order {'$' + formatPrice(orderState.quantity * (cake.prices[orderState.size] + (orderState.isGlutenFree ? 2 : 0)))}
                     </Button>
                 </DialogFooter>
             </DialogContent>
