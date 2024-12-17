@@ -1,18 +1,18 @@
 "use client"
-import React, { useContext, useReducer } from 'react'
+import React, { useState, useContext, useReducer, useEffect } from 'react'
+import { useRouter, usePathname, useSearchParams } from 'next/navigation';
 import { Cake, CakeSize } from '@/types/Cake'
 import { Button } from '../ui/button';
 import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogFooter, DialogTitle, DialogDescription } from '../ui/dialog';
 import { RadioGroup, RadioGroupItem } from '../ui/radio-group';
 import { OrderContext } from '@/lib/cartContext';
 import { Label } from "@/components/ui/label"
-import { MAX_QUANTITY } from '@/lib/constants';
 import { IoClose } from "react-icons/io5";
 import ImageCarousel from './ImageCarousel'
+import NumberInput from '@/components/ui/NumberInput'
+
 interface OrderDrawerProps {
     cake: Cake;
-    isDrawerOpen: boolean;
-    setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface OrderState {
@@ -60,10 +60,31 @@ const orderReducer = (state: OrderState, action: OrderAction): OrderState => {
     }
 };
 
-const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDrawerOpen }) => {
+const MenuDialog: React.FC<OrderDrawerProps> = ({ cake}) => {
     const formatPrice = (price: number) => `${price.toFixed(2)}`;
     const { state, dispatch } = useContext(OrderContext);
     const [orderState, orderDispatch] = useReducer(orderReducer, { quantity: 1, size: cake.available_size[0], comment: '', isGlutenFree: false });
+    const [isOpen, setIsOpen] = useState(false);
+    const pathName = usePathname();
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    useEffect(()=> {
+        const cakeName = searchParams.get('cake');
+        if (cakeName === cake.name) {
+            setIsOpen(true);
+        } else {
+            setIsOpen(false);
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
+        if (isOpen) {
+            router.push(`?cake=${cake.name}`, {scroll: false});
+        } else {
+            router.push(pathName, {scroll: false});
+        }
+    }, [isOpen])
 
     const handleSubmit = () => {
         const price = cake.prices[orderState.size] + (orderState.isGlutenFree ? 2 : 0);
@@ -97,7 +118,6 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
             });
         }
 
-        setIsDrawerOpen(false);
 
     };
 
@@ -110,9 +130,9 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
     };
 
     return (
-        <Dialog open={isDrawerOpen} onOpenChange={setIsDrawerOpen} >
+        <Dialog open={isOpen} onOpenChange={(o)=>setIsOpen(o)}>
             <DialogTrigger asChild>
-                <Button onClick={() => setIsDrawerOpen(true)}>
+                <Button >
                     Order
                 </Button>
             </DialogTrigger>
@@ -172,7 +192,7 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
                     </div>
                 </div>
                 <DialogFooter className='flex flex-row'>
-                    <button className="size-10 bg-_white rounded-lg shadow" onClick={() => setIsDrawerOpen(false)}>
+                    <button className="size-10 bg-_white rounded-lg shadow" onClick={() => setIsOpen(false)}>
                         <IoClose className='size-7 m-auto' />
                     </button>
                     <Button variant={'secondary'} className="bg-_pink ml-2 h-10 shadow" onClick={handleSubmit}>
@@ -184,60 +204,5 @@ const OrderDrawer: React.FC<OrderDrawerProps> = ({ cake, isDrawerOpen, setIsDraw
     );
 }
 
-const NumberInput = ({ quantity, setQuantity }: { quantity: number; setQuantity: (quantity: number) => void }) => {
-    const increment = () => {
-        if (quantity < MAX_QUANTITY) {
-            setQuantity(quantity + 1);
-        }
-    };
 
-    const decrement = () => {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        }
-    };
-
-    const handleQuantityInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = parseInt(e.target.value);
-        if (!isNaN(value) && value >= 1 && value <= MAX_QUANTITY) {
-            setQuantity(value);
-        }
-    };
-
-    return (
-        <div className="relative flex items-center max-w-[8rem]">
-            <button
-                type="button"
-                onClick={decrement}
-                disabled={quantity <= 1}
-                className={`bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-s-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none disabled:opacity-50`}
-            >
-                <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M1 1h16" />
-                </svg>
-            </button>
-            <input
-                type="number"
-                value={quantity}
-                onChange={handleQuantityInput}
-                min={1}
-                max={MAX_QUANTITY}
-                className="bg-gray-50 border-x-0 border-gray-300 h-11 text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 min-w-10"
-                readOnly
-
-            />
-            <button
-                type="button"
-                onClick={increment}
-                disabled={quantity >= MAX_QUANTITY}
-                className={`bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:border-gray-600 hover:bg-gray-200 border border-gray-300 rounded-e-lg p-3 h-11 focus:ring-gray-100 dark:focus:ring-gray-700 focus:ring-2 focus:outline-none disabled:opacity-50`}
-            >
-                <svg className="w-3 h-3 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 1v16M1 9h16" />
-                </svg>
-            </button>
-        </div>
-    );
-};
-
-export default OrderDrawer;
+export default MenuDialog;

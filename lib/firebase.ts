@@ -54,4 +54,21 @@ export const getOrderFromFirestore = async (orderId: string) => {
     }
 };
 
+
+export const sendEmailToAdmin = async (orderDetail: any) => {
+    try {
+        // Send email to admin
+        const docRef = await addDoc(collection(db, "emails"), {
+            to: ['dujink2@gmail.com'],
+            message: {
+                subject: `New Order Received - ${orderDetail.orderId}`,
+                text: `A new order has been received with order ID: ${orderDetail.orderId}. Please check the admin panel for more details.`
+            }
+        });
+        console.log("Email sent to admin", orderDetail);
+        
+    } catch (err) {
+        throw err;
+    }
+}
 // Removed export of app and db

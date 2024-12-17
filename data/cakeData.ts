@@ -30,7 +30,7 @@ const cakeData: Cake[] = [
         id: 3,
         name: 'Yamie Cake',
         priceRange: '23.00 ~ 65.00',
-        desc: 'Korean Style yam cake. Vanila sheet, bourbon syrup, and fresh yam cream.',
+        desc: 'Korean Style sweet-poptato cake. Vanila sheet, bourbon syrup, and fresh yam cream.',
         prices: {
             [CakeSize.FOUR_INCH]: 23.00,
             [CakeSize.SIX_INCH]: 45.00,

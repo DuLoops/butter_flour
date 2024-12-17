@@ -90,7 +90,7 @@ export default function CheckoutPage() {
             
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                    <label className="block mb-1">Name *</label>
+                    <label className="block mb-1">Name</label>
                     <input 
                         type="text" 
                         name="name" 
@@ -100,7 +100,7 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div>
-                    <label className="block mb-1">Email *</label>
+                    <label className="block mb-1">Email</label>
                     <input 
                         type="email" 
                         name="email" 
@@ -110,10 +110,11 @@ export default function CheckoutPage() {
                 </div>
                 
                 <div>
-                    <label className="block mb-1">Phone (optional)</label>
+                    <label className="block mb-1">Phone</label>
                     <input 
                         type="tel" 
                         name="phone" 
+                        required
                         className="w-full border p-2 rounded"
                     />
                 </div>

@@ -58,7 +58,7 @@ export default function Nav() {
         </div>
         <Link href={'/'} className='col-start-2 flex justify-center'>
           <Image src='/svg/bfLogo.svg' alt='ButterFlour' width={100} height={40}/>
-      </Link>
+        </Link>
         <Link href={isCart ? '/' : '/cart'} scroll={false} className={`justify-self-end flex justify-center items-center size-10 rounded-full`}> 
           {isCart ? (
             <FaHome className='size-7'/>
