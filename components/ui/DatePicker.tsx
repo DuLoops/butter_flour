@@ -3,7 +3,6 @@
 import { useContext, useState } from "react"
 import { format, addDays, addMonths, isBefore, isAfter } from "date-fns"
 import { FaRegCalendarAlt } from "react-icons/fa";
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import { OrderContext } from "@/lib/cartContext"
@@ -32,10 +31,8 @@ export function DatePicker() {
       <PopoverTrigger asChild>
         <Button
           variant={"outline"}
-          className={cn(
-            "w-2/3 justify-between font-normal px-2",
-            !state.pickupDate && "text-muted-foreground"
-          )}
+          className={
+            "w-2/3 justify-between font-normal px-2"}
         >
           {state.pickupDate ? format(state.pickupDate, "PPP") : <span>Pick a date</span>}
           <FaRegCalendarAlt className="h-4 w-4" />

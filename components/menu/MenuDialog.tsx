@@ -118,7 +118,7 @@ const MenuDialog: React.FC<OrderDrawerProps> = ({ cake}) => {
             });
         }
 
-
+        setIsOpen(false);
     };
 
     const setQuantity = (quantity: number) => {
@@ -159,7 +159,7 @@ const MenuDialog: React.FC<OrderDrawerProps> = ({ cake}) => {
                             >
                                 {cake.available_size.map((size) => (
                                     <RadioGroupItem key={size} value={size} id={size} className="text-black">
-                                        <Label htmlFor={size}>{`${size} ($${cake.prices[size]})`}</Label>
+                                        <Label htmlFor={size} className='text-lg'>{`${size} ($${cake.prices[size]})`}</Label>
                                     </RadioGroupItem>
                                 ))}
                             </RadioGroup>
@@ -170,12 +170,12 @@ const MenuDialog: React.FC<OrderDrawerProps> = ({ cake}) => {
                                 value={orderState.isGlutenFree.toString()}
                                 id='GlutenFree'
                                 onValueChange={(value) => orderDispatch({ type: 'SET_GLUTEN_FREE', payload: value === 'true' })}
-                            >
+                             >
                                 <RadioGroupItem value="false" id="glutenFreeNo" className="text-black">
-                                    <Label htmlFor="glutenFreeNo">None</Label>
+                                    <Label htmlFor="glutenFreeNo" className='text-lg'>None</Label>
                                 </RadioGroupItem>
                                 <RadioGroupItem value="true" id="glutenFreeYes" className="text-black">
-                                    <Label htmlFor="glutenFreeYes">Gluten free (+$2.00)</Label>
+                                    <Label htmlFor="glutenFreeYes" className='text-lg'>Gluten free (+$2.00)</Label>
                                 </RadioGroupItem>
                             </RadioGroup>
                         </div>

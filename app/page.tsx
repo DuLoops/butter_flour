@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button"
 import Landing from "./Landing"
 import Order from "./Order"
-import { sendEmailToAdmin } from "@/lib/firebase"
 export default function Home() {
 
   return (

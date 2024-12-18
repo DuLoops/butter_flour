@@ -25,12 +25,15 @@ export default function Nav() {
     animate: { scale: [1, 1.5, 1] }
   };
 
+
   useEffect(() => {
-    if (state.orders.length > 0 && !animateGift) {
+    if (state.orders.length > 0 ) {
       setCartEmpty(false);
-      setAnimateGift(true);
-      const timer = setTimeout(() => setAnimateGift(false), 1500);
-      return () => clearTimeout(timer);
+      if (!animateGift) {
+        setAnimateGift(true);
+        const timer = setTimeout(() => setAnimateGift(false), 1500);
+        return () => clearTimeout(timer);
+      }
     } else {
       setCartEmpty(true);
     }
@@ -59,7 +62,7 @@ export default function Nav() {
         <Link href={'/'} className='col-start-2 flex justify-center'>
           <Image src='/svg/bfLogo.svg' alt='ButterFlour' width={100} height={40}/>
         </Link>
-        <Link href={isCart ? '/' : '/cart'} scroll={false} className={`justify-self-end flex justify-center items-center size-10 rounded-full`}> 
+      <Link href={isCart ? '/' : '/cart'} scroll={false} className={`justify-self-end flex justify-center items-center size-10 rounded-full`}> 
           {isCart ? (
             <FaHome className='size-7'/>
           ) : (

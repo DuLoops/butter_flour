@@ -7,7 +7,15 @@ import OrderTime from '@/components/order/OrderTime';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { format } from "date-fns"
+import { sendEmailToAdmin } from "@/lib/firebase"
 
+  const handleEmailTest = async (orderDetail:any) => {
+    try {
+      await sendEmailToAdmin(orderDetail)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 export default function CheckoutPage() {
     const router = useRouter();
     const { state, dispatch } = useContext(OrderContext);
@@ -162,6 +170,7 @@ export default function CheckoutPage() {
                     ) : 'Place Order'}
                 </button>
             </form>
+
         </div>
     );
 }

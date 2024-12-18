@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { OrderDetails, OrderProgress, OrderItem } from '@/types/Order';
-import { saveOrderToFirestore, getOrderFromFirestore } from '@/lib/firebase';
+import { saveOrderToFirestore, getOrderFromFirestore,sendEmailToAdmin  } from '@/lib/firebase';
 import emailjs from '@emailjs/browser';
 
 export default function useOrder() {
@@ -34,6 +34,7 @@ export default function useOrder() {
         try {
             await saveOrderToFirestore(completedOrderDetails);
             await sendEmail(emailDetail);
+            await sendEmailToAdmin(orderDetail);
         } catch (err) {
             throw err;
         }

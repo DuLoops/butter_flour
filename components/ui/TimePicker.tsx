@@ -3,7 +3,6 @@ import {useState, useContext, useEffect} from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { Button } from './button'
 import { FaRegClock } from "react-icons/fa";
-
 import { OrderContext } from "@/lib/cartContext"
 
 const availableTimes = {
@@ -12,7 +11,7 @@ const availableTimes = {
 };
 
 export default function TimePicker() {
-    const [time, setTime] = useState('Anytime')
+    const [time, setTime] = useState<string | null>(null)
     const [open, setOpen] = useState(false)
     const { state, dispatch } = useContext(OrderContext)
 
@@ -41,8 +40,8 @@ export default function TimePicker() {
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
                 <Button
-                    variant={"outline"} className='w-2/3 justify-between font-normal px-2 '>
-                        {time}
+                    variant={"outline"} className={'w-2/3 justify-between font-normal px-2'}>
+                        {time ? time : 'Pick a time'}
                     <FaRegClock className="h-4 w-4"/>         
                 </Button>
             </PopoverTrigger>
